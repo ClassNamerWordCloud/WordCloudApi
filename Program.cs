@@ -1,5 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using WordCloudApi.Models;
 using WordCloudApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,11 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddDbContext<WordCloudContext>(opt =>
-    opt.UseInMemoryDatabase("WordCloudList"));
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<IHtmlFetcher, HtmlFetcher>();
+builder.Services.AddScoped<IHtmlHandler, HtmlHandler>();
 builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 {
     builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();

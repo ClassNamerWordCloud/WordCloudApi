@@ -1,19 +1,16 @@
 ﻿using HtmlAgilityPack;
 using Newtonsoft.Json;
-using Swashbuckle.AspNetCore.SwaggerGen;
-using System.Collections.Generic;
-using WordCloudApi.Models;
 
 namespace WordCloudApi.Services
 {
-    public class HtmlFetcher : IHtmlFetcher
+    public class HtmlHandler : IHtmlHandler
     {
         private readonly IConfiguration _configuration;
         private readonly string _url;
         private readonly HtmlWeb _web;
         private readonly int _numberOfFetches;
 
-        public HtmlFetcher(IConfiguration configuration)
+        public HtmlHandler(IConfiguration configuration)
         {
             _configuration = configuration;
             _url = _configuration["HtmlProviderUrl"];

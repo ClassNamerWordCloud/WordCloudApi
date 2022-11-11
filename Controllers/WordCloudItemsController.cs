@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WordCloudApi.Models;
 using WordCloudApi.Services;
 
 namespace WordCloudApi.Controllers
@@ -8,12 +7,10 @@ namespace WordCloudApi.Controllers
     [ApiController]
     public class WordCloudItemsController : ControllerBase
     {
-        private readonly WordCloudContext _context;
-        private readonly IHtmlFetcher _htmlFetcher;
+        private readonly IHtmlHandler _htmlFetcher;
 
-        public WordCloudItemsController(WordCloudContext context, IHtmlFetcher htmlFetcher)
+        public WordCloudItemsController(IHtmlHandler htmlFetcher)
         {
-            _context = context;
             _htmlFetcher = htmlFetcher;
         }
 
