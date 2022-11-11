@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordCloudApi", "WordCloudApi.csproj", "{FA298C5B-77C6-4281-9A22-F7060CB19066}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WordCloudApi", "API\WordCloudApi.csproj", "{33CE4A88-6AE4-4BD5-8857-A81F429B9261}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests\Tests.csproj", "{37F9093C-97BE-4864-AA79-6757D1D520F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{FA298C5B-77C6-4281-9A22-F7060CB19066}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FA298C5B-77C6-4281-9A22-F7060CB19066}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FA298C5B-77C6-4281-9A22-F7060CB19066}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FA298C5B-77C6-4281-9A22-F7060CB19066}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33CE4A88-6AE4-4BD5-8857-A81F429B9261}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33CE4A88-6AE4-4BD5-8857-A81F429B9261}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33CE4A88-6AE4-4BD5-8857-A81F429B9261}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33CE4A88-6AE4-4BD5-8857-A81F429B9261}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37F9093C-97BE-4864-AA79-6757D1D520F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37F9093C-97BE-4864-AA79-6757D1D520F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37F9093C-97BE-4864-AA79-6757D1D520F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37F9093C-97BE-4864-AA79-6757D1D520F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
