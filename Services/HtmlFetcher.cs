@@ -1,6 +1,4 @@
 ﻿using HtmlAgilityPack;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using WordCloudApi.Models;
 
 namespace WordCloudApi.Services
@@ -18,20 +16,36 @@ namespace WordCloudApi.Services
             _web = new HtmlWeb();
         }
 
-        public ActionResult<IEnumerable<WordCloudItem>> Fetch()
+        public async Task<IEnumerable<WordCloudItem>> Fetch()
         {
             List<WordCloudItem> words = new List<WordCloudItem>();
 
-            for (int i = 0; i < 100; i++)
+            List<Task<IEnumerable<WordCloudItem>>> tasks = new List<Task<IEnumerable<WordCloudItem>>>();
+            for (int i = 0; i < 10; i++)
             {
-                var doc = _web.Load(_url);
-                foreach (HtmlNode wbr in doc.DocumentNode.SelectNodes("//p").Where(node => node.Attributes["id"].Value == "classname"))
-                {
-                    var inner = wbr.InnerHtml;
-                    words.AddRange(inner.Split("<wbr>").Select(word => new WordCloudItem() { Name = word }));
-                }
+                tasks.Add(LoadDataAsync());
             }
-            return new ActionResult<IEnumerable<WordCloudItem>>(words);
+
+            await Task.WhenAll(tasks);
+            foreach (var task in tasks)
+            {
+                words.AddRange(task.Result);
+            }
+
+            return words;
+        }
+
+        private async Task<IEnumerable<WordCloudItem>> LoadDataAsync()
+        {
+            List<WordCloudItem> words = new List<WordCloudItem>();
+            var doc = await _web.LoadFromWebAsync(_url);
+            foreach (HtmlNode wbr in doc.DocumentNode.SelectNodes("//p").Where(node => node.Attributes["id"].Value == "classname"))
+            {
+                var inner = wbr.InnerHtml;
+                words.AddRange(inner.Split("<wbr>").Select(word => new WordCloudItem() { Value = word }));
+            }
+
+            return words;
         }
     }
 }

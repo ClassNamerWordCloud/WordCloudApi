@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using WordCloudApi.Models;
 using WordCloudApi.Services;
 
@@ -25,9 +19,9 @@ namespace WordCloudApi.Controllers
 
         // GET: api/WordCloudItems
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<WordCloudItem>>> GetWordCloudItem()
+        public async Task<IEnumerable<WordCloudItem>> GetWordCloudItem()
         {
-            return _htmlFetcher.Fetch();
+            return await _htmlFetcher.Fetch();
         }
     }
 }
