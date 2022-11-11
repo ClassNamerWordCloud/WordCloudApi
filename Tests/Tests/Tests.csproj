@@ -21,4 +21,12 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\API\WordCloudApi.csproj" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy /Y /S &quot;$(SolutionDir)Tests\Tests\TestsResources\*&quot; &quot;$(TargetDir)&quot;  &#xD;&#xA;" />
+  </Target>
+
 </Project>
