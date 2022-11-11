@@ -4,6 +4,6 @@ namespace WordCloudApi.Services
 {
     public interface IHtmlFetcher
     {
-        public Task<IEnumerable<WordCloudItem>> Fetch();
+        public Task<string> Fetch();
     }
 }

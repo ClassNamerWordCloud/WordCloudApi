@@ -1,4 +1,7 @@
 ﻿using HtmlAgilityPack;
+using Newtonsoft.Json;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using System.Collections.Generic;
 using WordCloudApi.Models;
 
 namespace WordCloudApi.Services
@@ -8,20 +11,22 @@ namespace WordCloudApi.Services
         private readonly IConfiguration _configuration;
         private readonly string _url;
         private readonly HtmlWeb _web;
+        private readonly int _numberOfFetches;
 
         public HtmlFetcher(IConfiguration configuration)
         {
             _configuration = configuration;
             _url = _configuration["HtmlProviderUrl"];
+            _numberOfFetches = int.Parse(_configuration["NumberOfFetches"]);
             _web = new HtmlWeb();
         }
 
-        public async Task<IEnumerable<WordCloudItem>> Fetch()
+        public async Task<string> Fetch()
         {
-            List<WordCloudItem> words = new List<WordCloudItem>();
+            IDictionary<string, int> words = new Dictionary<string, int>();
 
-            List<Task<IEnumerable<WordCloudItem>>> tasks = new List<Task<IEnumerable<WordCloudItem>>>();
-            for (int i = 0; i < 10; i++)
+            List<Task<IEnumerable<string>>> tasks = new List<Task<IEnumerable<string>>>();
+            for (int i = 0; i < _numberOfFetches; i++)
             {
                 tasks.Add(LoadDataAsync());
             }
@@ -29,20 +34,27 @@ namespace WordCloudApi.Services
             await Task.WhenAll(tasks);
             foreach (var task in tasks)
             {
-                words.AddRange(task.Result);
+                foreach (var item in task.Result)
+                {
+                    if (!words.TryAdd(item, 1))
+                    {
+                        words[item]++;
+                    } 
+                }
             }
-
-            return words;
+            var transformed = from key in words.Keys
+                select new { value = key, count = words[key] };
+            return JsonConvert.SerializeObject(transformed);
         }
 
-        private async Task<IEnumerable<WordCloudItem>> LoadDataAsync()
+        private async Task<IEnumerable<string>> LoadDataAsync()
         {
-            List<WordCloudItem> words = new List<WordCloudItem>();
+            List<string> words = new List<string>();
             var doc = await _web.LoadFromWebAsync(_url);
             foreach (HtmlNode wbr in doc.DocumentNode.SelectNodes("//p").Where(node => node.Attributes["id"].Value == "classname"))
             {
                 var inner = wbr.InnerHtml;
-                words.AddRange(inner.Split("<wbr>").Select(word => new WordCloudItem() { Value = word }));
+                words.AddRange(inner.Split("<wbr>"));
             }
 
             return words;

@@ -19,7 +19,7 @@ namespace WordCloudApi.Controllers
 
         // GET: api/WordCloudItems
         [HttpGet]
-        public async Task<IEnumerable<WordCloudItem>> GetWordCloudItem()
+        public async Task<string> GetWordCloudItem()
         {
             return await _htmlFetcher.Fetch();
         }
