@@ -1,7 +1,9 @@
-﻿namespace WordCloudApi.Services
+﻿using HtmlAgilityPack;
+
+namespace WordCloudApi.Services
 {
     public interface IHtmlHandler
     {
-        public Task<string> Fetch();
+        public Task<HtmlDocument> GetHtmlFromUrl(string url);
     }
 }

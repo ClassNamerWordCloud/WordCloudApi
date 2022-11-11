@@ -10,6 +10,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IHtmlHandler, HtmlHandler>();
+builder.Services.AddScoped<IWordCloudBuilder, WordCloudBuilder>();
+builder.Services.AddScoped<IWordsBuilder, WordsBuilder>();
+
 builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 {
     builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();

@@ -7,18 +7,18 @@ namespace WordCloudApi.Controllers
     [ApiController]
     public class WordCloudItemsController : ControllerBase
     {
-        private readonly IHtmlHandler _htmlFetcher;
+        private readonly IWordCloudBuilder _wordCloudBuilder;
 
-        public WordCloudItemsController(IHtmlHandler htmlFetcher)
+        public WordCloudItemsController(IWordCloudBuilder wordCloudBuilder)
         {
-            _htmlFetcher = htmlFetcher;
+            _wordCloudBuilder = wordCloudBuilder;
         }
 
         // GET: api/WordCloudItems
         [HttpGet]
         public async Task<string> GetWordCloudItem()
         {
-            return await _htmlFetcher.Fetch();
+            return await _wordCloudBuilder.GetWordCloud(100, "https://www.classnamer.org/");
         }
     }
 }
