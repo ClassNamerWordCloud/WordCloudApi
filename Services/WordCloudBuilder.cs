@@ -1,5 +1,6 @@
 ﻿using HtmlAgilityPack;
 using Newtonsoft.Json;
+using WordCloudApi.Models;
 
 namespace WordCloudApi.Services
 {
@@ -13,7 +14,7 @@ namespace WordCloudApi.Services
             _htmlHandler = htmlHandler;
             _wordsBuilder = wordsBuilder;
         }
-        public async Task<string> GetWordCloud(int numberOfDocs,string url)
+        public async Task<string> GetWordCloud(int numberOfDocs,string url, Filter filter)
         {
             IDictionary<string, int> words = new Dictionary<string, int>();
 
@@ -26,7 +27,7 @@ namespace WordCloudApi.Services
 
             foreach (var task in tasks)
             {
-                var wordsList = _wordsBuilder.GetWordsFromHtml(task.Result);
+                var wordsList = _wordsBuilder.GetWordsFromHtml(task.Result, filter);
                 foreach (var item in wordsList)
                 {
                     if (!words.TryAdd(item, 1))

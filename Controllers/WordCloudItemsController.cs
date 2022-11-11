@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WordCloudApi.Models;
 using WordCloudApi.Services;
 
 namespace WordCloudApi.Controllers
@@ -18,7 +19,7 @@ namespace WordCloudApi.Controllers
         [HttpGet]
         public async Task<string> GetWordCloudItem()
         {
-            return await _wordCloudBuilder.GetWordCloud(100, "https://www.classnamer.org/");
+            return await _wordCloudBuilder.GetWordCloud(100, "https://www.classnamer.org/", new Filter("//p", "id", "classname", "<wbr>"));
         }
     }
 }
