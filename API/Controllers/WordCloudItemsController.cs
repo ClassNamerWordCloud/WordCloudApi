@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using WordCloudApi.Models;
 using WordCloudApi.Services;
 
@@ -19,7 +20,10 @@ namespace WordCloudApi.Controllers
         [HttpGet]
         public async Task<string> GetWordCloudItem()
         {
-            return await _wordCloudBuilder.GetWordCloud(100, "https://www.classnamer.org/", new Filter("//p", "id", "classname", "<wbr>"));
+            var result =  await _wordCloudBuilder.GetWordCloud(100, "https://www.classnamer.org/", new Filter("//p", "id", "classname", "<wbr>"));
+            var transformed = from key in result.Keys
+                select new { value = key, count = result[key] };
+            return JsonConvert.SerializeObject(transformed);
         }
     }
 }

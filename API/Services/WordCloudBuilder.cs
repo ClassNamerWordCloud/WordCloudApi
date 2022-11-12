@@ -8,18 +8,20 @@ namespace WordCloudApi.Services
     {
         private readonly IHtmlHandler _htmlHandler;
         private readonly IWordsBuilder _wordsBuilder;
+        private readonly ILogger<WordCloudBuilder> _logger;
 
-        public WordCloudBuilder(IHtmlHandler htmlHandler, IWordsBuilder wordsBuilder)
+        public WordCloudBuilder(IHtmlHandler htmlHandler, IWordsBuilder wordsBuilder, ILogger<WordCloudBuilder> logger)
         {
             _htmlHandler = htmlHandler;
             _wordsBuilder = wordsBuilder;
+            _logger = logger;
         }
-        public async Task<string> GetWordCloud(int numberOfDocs,string url, Filter filter)
+        public async Task<IDictionary<string, int>> GetWordCloud(int numberOfRepetitions,string url, Filter filter)
         {
-            IDictionary<string, int> words = new Dictionary<string, int>();
+            IDictionary<string, int> wordCloud = new Dictionary<string, int>();
 
             List<Task<HtmlDocument>> tasks = new List<Task<HtmlDocument>>();
-            for (int i = 0; i < numberOfDocs; i++)
+            for (int i = 0; i < numberOfRepetitions; i++)
             {
                 tasks.Add(_htmlHandler.GetHtmlFromUrl(url));
             }
@@ -30,15 +32,13 @@ namespace WordCloudApi.Services
                 var wordsList = _wordsBuilder.GetWordsFromHtml(task.Result, filter);
                 foreach (var item in wordsList)
                 {
-                    if (!words.TryAdd(item, 1))
+                    if (!wordCloud.TryAdd(item, 1))
                     {
-                        words[item]++;
+                        wordCloud[item]++;
                     }
                 }
             }
-            var transformed = from key in words.Keys
-                select new { value = key, count = words[key] };
-            return JsonConvert.SerializeObject(transformed);
+            return wordCloud;
         }
     }
 }

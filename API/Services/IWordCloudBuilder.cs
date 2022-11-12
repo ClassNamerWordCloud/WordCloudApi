@@ -4,6 +4,6 @@ namespace WordCloudApi.Services
 {
     public interface IWordCloudBuilder
     {
-        Task<string> GetWordCloud(int numberOfDocs, string url, Filter filter);
+        Task<IDictionary<string, int>> GetWordCloud(int numberOfDocs, string url, Filter filter);
     }
 }
