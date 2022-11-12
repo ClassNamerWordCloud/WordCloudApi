@@ -36,7 +36,7 @@ namespace Tests
             string htmlFile = "testHtml.html";
             HtmlDocument doc = new HtmlDocument();
             doc.Load(htmlFile);
-            IEnumerable<string> expectedResult = new List<string>() { "Multiple", "Byte", "Adapter" };
+
             //act
             var result = _wordsBuilder.GetWordsFromHtml(doc, new Filter("//doesntexist", "id", "classname", "<wbr>"));
 
