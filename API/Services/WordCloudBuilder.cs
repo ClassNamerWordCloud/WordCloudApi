@@ -25,7 +25,17 @@ namespace WordCloudApi.Services
             {
                 tasks.Add(_htmlHandler.GetHtmlFromUrl(url));
             }
-            await Task.WhenAll(tasks);
+
+            try
+            {
+                await Task.WhenAll(tasks);
+
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Get Html From Url {url} Failed with: {e}");
+                return wordCloud;
+            }
 
             foreach (var task in tasks)
             {
