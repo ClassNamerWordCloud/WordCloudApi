@@ -18,12 +18,17 @@ namespace WordCloudApi.Controllers
 
         // GET: api/WordCloudItems
         [HttpGet]
-        public async Task<string> GetWordCloudItem()
+        public async Task<ObjectResult> GetWordCloudItem()
         {
-            var result =  await _wordCloudBuilder.GetWordCloud(100, "https://www.classnamer.org/", new Filter("//p", "id", "classname", "<wbr>"));
+            string url = "https://www.classnamer.org/";
+            var result =  await _wordCloudBuilder.GetWordCloud(100, url, new Filter("//p", "id", "classname", "<wbr>"));
+            if (!result.Any())
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Fetching word-cloud from {url} Failed");
+            }
             var transformed = from key in result.Keys
                 select new { value = key, count = result[key] };
-            return JsonConvert.SerializeObject(transformed);
+            return Ok(JsonConvert.SerializeObject(transformed));
         }
     }
 }
