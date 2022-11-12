@@ -21,7 +21,7 @@ namespace WordCloudApi.Controllers
         public async Task<ObjectResult> GetWordCloud()
         {
             string url = "https://www.classnamer.org/";
-            var result =  await _wordCloudBuilder.GetWordCloud(5, url, new Filter("//p", "id", "classname", "<wbr>"));
+            var result =  await _wordCloudBuilder.GetWordCloud(100, url, new Filter("//p", "id", "classname", "<wbr>"));
             if (!result.Any())
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Fetching word-cloud from {url} Failed");

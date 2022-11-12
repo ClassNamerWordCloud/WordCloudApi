@@ -1,4 +1,6 @@
 ﻿using HtmlAgilityPack;
+using System.Net;
+
 
 namespace WordCloudApi.Services
 {
@@ -9,6 +11,8 @@ namespace WordCloudApi.Services
 
         public HtmlHandler(ILogger<HtmlHandler> logger)
         {
+            ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072;
+
             _logger = logger;
             _web = new HtmlWeb();
         }
