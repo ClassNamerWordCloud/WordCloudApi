@@ -45,7 +45,7 @@ namespace Tests
             var result = await _wordCloudBuilder.GetWordCloud(numberOfRepetitions, "https://www.classnamer.org/", filter);
             
             //assert
-            Assert.Equal(result, expectedResult);
+            Assert.Equal(expectedResult, result);
         }
 
         [Fact]

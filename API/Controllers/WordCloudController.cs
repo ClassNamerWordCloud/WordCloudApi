@@ -7,18 +7,18 @@ namespace WordCloudApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class WordCloudItemsController : ControllerBase
+    public class WordCloudController : ControllerBase
     {
         private readonly IWordCloudBuilder _wordCloudBuilder;
 
-        public WordCloudItemsController(IWordCloudBuilder wordCloudBuilder)
+        public WordCloudController(IWordCloudBuilder wordCloudBuilder)
         {
             _wordCloudBuilder = wordCloudBuilder;
         }
 
-        // GET: api/WordCloudItems
+        // GET: api/GetWordCloud
         [HttpGet]
-        public async Task<ObjectResult> GetWordCloudItem()
+        public async Task<ObjectResult> GetWordCloud()
         {
             string url = "https://www.classnamer.org/";
             var result =  await _wordCloudBuilder.GetWordCloud(100, url, new Filter("//p", "id", "classname", "<wbr>"));

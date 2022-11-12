@@ -26,7 +26,7 @@ namespace Tests
             var result = _wordsBuilder.GetWordsFromHtml(doc, new Filter("//p", "id", "classname", "<wbr>"));
             
             //assert
-            Assert.Equal(result, expectedResult);
+            Assert.Equal(expectedResult, result);
         }
 
         [Fact]
